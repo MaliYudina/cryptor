@@ -2,9 +2,10 @@
 Parse module gets the text information from the offered files
 Extracts necessary data such as passwords, secret questions, private information
 """
+import yaml
 
 
-class Information:
+class Reader:
     """
     Class for all secure information
     """
@@ -15,13 +16,19 @@ class Information:
         """
         Reads collected information from user_interface module
         """
-        pass
+        user_input = input('')
+        return user_input
 
-    def write_result(self):
+    def write_result(self, user_input=None):
         """
-        Save result into temporary files
-        :return: json / yml file for the following analysis
-        """
+        Save result into permanent files
 
-        return raw
+        """
+        with open('user_raw_data.yml', 'w') as f:
+            yaml.dump(user_input, f)
+
+
+
+
+
 

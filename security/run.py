@@ -3,16 +3,3 @@ from cryptor.cryptor import Crypt
 
 
 
-_main():
-
-Crypt.encrypt()
-
-
-
-
-
-
-
-
-if __name__ == '__main__':
-    _main()

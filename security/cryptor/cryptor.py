@@ -4,40 +4,26 @@ from reader results:
 string -> to binary string -> to encrypted
 encrypted -> binary string -> string
 """
-import nacl.secret
-import nacl.utils
-from reader.reader import Information
+from cryptography.fernet import Fernet
+from reader.reader import Reader
+
+
 
 
 class Crypt:
     """
     Crypto process of raw data received from reader's module
     """
+
     def __init__(self, raw):
-        # self.raw = Information.write_result()
-        self.raw = raw
+        self.raw = Reader.write_result()
 
-    def encrypt(self, raw):  # куда пихать ключ открытый и закрытый??
-
-        key = nacl.utils.random(nacl.secret.SecretBox.KEY_SIZE)  # secret key
-
-        # box to store the encrypt or decrypt messages
-        box = nacl.secret.SecretBox(key)
-
-        # Encrypt our message, it will be exactly 40 bytes longer than the
-        #   original message as it stores authentication information and the
-        #   nonce alongside it.
-        encrypted = box.encrypt(raw)
-        my_key_as_hex = encrypted.hex()
-        my_key = bytes(my_key_as_hex, "utf-8")
-        print(my_key)
-        print(encrypted)
-
-    def decrypt(self):
+    def encrypt(self, raw):
+        key = Fernet.generate_key()
+        f = Fernet(key)
+        token = f.encrypt(b"A really secret message. Not for prying eyes.")
+        print(token)
         pass
 
-    encrypt(self=None, raw=b'Hello')
-    # decrypt()
-
-
-
+    def decrypt(self):
+        f.decrypt(token)
